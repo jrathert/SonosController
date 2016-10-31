@@ -11,8 +11,11 @@ def list_music_services():
 
 def list_players():
     speakers = soco.discover()
-    for s in speakers:
-        print("Speaker '{}' has IP: {}".format(s.player_name, s.ip_address))
+    if speakers is not None and len(speakers) > 0:
+        for s in speakers:
+            print("Speaker '{}' has IP: {}".format(s.player_name, s.ip_address))
+    else:
+        print("No speaker found")
 
 def get_device(roomname: str):
     speakers = soco.discover()
