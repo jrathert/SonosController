@@ -6,10 +6,24 @@ from soco.music_services import Account
 from soco.music_services import MusicService
 
 
+def list_music_services():
+    print(MusicService.get_subscribed_services_names())
+
 def list_players():
     speakers = soco.discover()
     for s in speakers:
         print("Speaker '{}' has IP: {}".format(s.player_name, s.ip_address))
+
+def get_device(roomname: str):
+    speakers = soco.discover()
+    spkr = None
+    if speakers is not None:
+        for spkr in speakers:
+            if spkr.player_name == roomname:
+                break
+        else:
+            spkr = None
+    return spkr
 
 def print_current_track_info(room):
     if type(room) == SoCo:
@@ -19,21 +33,6 @@ def print_current_track_info(room):
     info = speaker.get_current_track_info()
     for k in ['artist', 'album', 'title', 'uri']:
         print ("{}: {}".format(k, info[k]))
-
-
-def list_music_services():
-    print(MusicService.get_subscribed_services_names())
-
-
-def get_device(roomname: str):
-    speakers = soco.discover()
-    for spkr in speakers:
-        if spkr.player_name == roomname:
-            break
-    else:
-        spkr = None
-    return spkr
-
 
 def play_weekly_discover_in_room(room):
     if type(room) == SoCo:
@@ -71,16 +70,17 @@ if __name__ == "__main__":
 
 
     logging.info("Start program")
-    #list_players()
+#    list_players()
     player = get_device("Mobil")
     print("Plaver is: '{}'".format(player.ip_address))
-    #print_current_track_info(player)
-    #print(get_device("Küche"))
-    #list_music_services()
 
-    spotify = MusicService('Spotify')
-    print(spotify.available_search_categories)
-    print(spotify.search("artists", "The Cure"))
+    albums = player.music_library.get_albums(search_term='Black')
+    for album in albums:
+        print('Added:', album.title)
+
+    #spotify = MusicService('Spotify')
+    #print(spotify.available_search_categories)
+    #print(spotify.search("artists", "The Cure"))
     #s = get_device("Küche")
     #q = s.get_queue()
     #s.add_to_queue("spotify:track:7HFaTkpIeG0pXINEm7EEG4")
