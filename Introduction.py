@@ -75,11 +75,12 @@ if __name__ == "__main__":
     logging.info("Start program")
 #    list_players()
     player = get_device("Mobil")
+    player = SoCo('192.168.1.36')
     print("Plaver is: '{}'".format(player.ip_address))
 
-    albums = player.music_library.get_albums(search_term='Black')
+    albums = player.music_library.get_albums(search_term='White')
     for album in albums:
-        print('Added:', album.title)
+        print('Added:', album.creator, "-", album.title)
 
     #spotify = MusicService('Spotify')
     #print(spotify.available_search_categories)
