@@ -82,9 +82,10 @@ if __name__ == "__main__":
     for album in albums:
         print('Added:', album.creator, "-", album.title)
 
-    #spotify = MusicService('Spotify')
-    #print(spotify.available_search_categories)
-    #print(spotify.search("artists", "The Cure"))
+    spotify = MusicService('Spotify')
+    print(spotify.available_search_categories)
+    print(spotify.search("artists", "The Cure"))
+
     #s = get_device("Küche")
     #q = s.get_queue()
     #s.add_to_queue("spotify:track:7HFaTkpIeG0pXINEm7EEG4")
